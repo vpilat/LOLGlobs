@@ -1,0 +1,121 @@
+---
+layout: default
+---
+<div class="entry-page">
+  <div class="entry-header">
+    <div class="entry-title-row">
+      <h1 class="entry-name">{{ page.Name }}</h1>
+      <div class="entry-badges">
+        {% assign platform_slug = page.Platform %}
+        <span class="badge platform-badge platform-{{ platform_slug }}">
+          {% case platform_slug %}
+            {% when 'linux' %}Linux
+            {% when 'macos' %}macOS
+            {% when 'windows-cmd' %}Windows CMD
+            {% when 'powershell' %}PowerShell
+            {% else %}{{ platform_slug }}
+          {% endcase %}
+        </span>
+        <span class="badge category-badge">{{ page.Category }}</span>
+        {% if page.MitreID %}
+        <a href="https://attack.mitre.org/techniques/{{ page.MitreID | replace: '.', '/' }}/" target="_blank" class="badge mitre-badge">{{ page.MitreID }}</a>
+        {% endif %}
+      </div>
+    </div>
+    <p class="entry-description">{{ page.Description }}</p>
+  </div>
+
+  <div class="entry-body">
+    <section class="entry-section">
+      <h2>Binary Paths</h2>
+      <ul class="binary-paths">
+        {% for path in page.BinaryPath %}
+        <li><code>{{ path }}</code></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="entry-section">
+      <h2>Glob Patterns</h2>
+      <div class="patterns-table-wrap">
+        <table class="patterns-table">
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>Wildcards</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in page.Patterns %}
+            <tr>
+              <td class="pattern-cell">
+                <code class="pattern-code">{% include pattern_highlight.html pattern=p.Pattern %}</code>
+                <button class="copy-btn" data-copy="{{ p.Pattern }}" title="Copy pattern">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                  </svg>
+                </button>
+              </td>
+              <td class="wildcards-cell">
+                {% for wc in p.Wildcards %}
+                <span class="wildcard-badge">{{ wc }}</span>
+                {% endfor %}
+              </td>
+              <td class="notes-cell">{{ p.Notes }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    {% if page.PlatformNotes %}
+    <section class="entry-section platform-notes-section">
+      <h2>Platform Notes</h2>
+      <div class="platform-notes-content">{{ page.PlatformNotes | markdownify }}</div>
+    </section>
+    {% endif %}
+
+    {% if page.Resources %}
+    <section class="entry-section">
+      <h2>Resources</h2>
+      <ul class="resources-list">
+        {% for url in page.Resources %}
+        <li><a href="{{ url }}" target="_blank" rel="noopener">{{ url }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if page.Acknowledgements %}
+    <section class="entry-section">
+      <h2>Acknowledgements</h2>
+      <ul class="ack-list">
+        {% for ack in page.Acknowledgements %}
+        <li>
+          {% if ack.handle %}<a href="https://twitter.com/{{ ack.handle | remove: '@' }}" target="_blank">{{ ack.handle }}</a>{% endif %}
+          {% if ack.name %} — {{ ack.name }}{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+  </div>
+
+  <div class="entry-nav-footer">
+    <a href="{{ '/' | relative_url }}" class="back-link">&#8592; Back to Catalog</a>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1500);
+    });
+  });
+});
+</script>

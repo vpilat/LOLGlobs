@@ -1,0 +1,29 @@
+title: LOLGlobs
+description: "Process execution through wildcard pattern evasion — a catalog of glob-based command obfuscation techniques for Linux, macOS, Windows CMD, and PowerShell."
+baseurl: ""
+url: "https://0xv1n.github.io/LOLGlobs"
+
+collections:
+  globs:
+    output: true
+    permalink: /globs/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: "globs"
+    values:
+      layout: "entry"
+
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - README.md
+  - "*.sh"

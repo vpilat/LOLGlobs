@@ -1,0 +1,16 @@
+---
+layout: null
+---
+[{% assign all_globs = site.globs %}{% for entry in all_globs %}{% unless forloop.first %},{% endunless %}
+  {
+    "name": {{ entry.Name | jsonify }},
+    "description": {{ entry.Description | jsonify }},
+    "platform": {{ entry.Platform | jsonify }},
+    "category": {{ entry.Category | jsonify }},
+    "mitreId": {{ entry.MitreID | jsonify }},
+    "binaryPath": {{ entry.BinaryPath | jsonify }},
+    "patternCount": {{ entry.Patterns | size }},
+    "patterns": {{ entry.Patterns | jsonify }},
+    "url": {{ entry.url | absolute_url | jsonify }}
+  }{% endfor %}
+]

@@ -1,0 +1,31 @@
+- id: linux
+  label: Linux
+  shell: bash
+  color: "#f85149"
+  description: "GNU/Linux with bash shell. Glob expansion happens before command execution. Supports *, ?, [], [!], {}, ** (globstar)."
+  notes: |
+    Shell expands globs **before** passing arguments to the kernel. Pattern `w?oami` is expanded by bash to `whoami` if the file exists. Full path globs like `/???/???/w*` also work. Patterns that match no files are passed literally (unless nullglob is set).
+
+- id: macos
+  label: macOS
+  shell: zsh
+  color: "#8b949e"
+  description: "macOS with zsh shell (default since Catalina). Stricter glob behavior than bash — errors on no match by default."
+  notes: |
+    zsh has stricter glob handling than bash. By default, zsh raises a `nomatch` error if a glob matches no files. Use `setopt NO_NOMATCH` or prefix with `noglob` to suppress. Most bash patterns work identically in zsh. Extended globs available with `setopt EXTENDED_GLOB`.
+
+- id: windows-cmd
+  label: Windows CMD
+  shell: cmd.exe
+  color: "#58a6ff"
+  description: "Windows Command Processor. Does NOT expand globs in command position — requires for/where wrapper patterns."
+  notes: |
+    **CMD does NOT expand wildcards in the command name position.** Unlike bash/zsh, typing `c*rtutil` in CMD will not resolve to certutil. Instead, use the `for /f` + `where` pattern: `for /f %i in ('where c*til.exe') do @%i [args]`. In batch files, use `%%i` instead of `%i`.
+
+- id: powershell
+  label: PowerShell
+  shell: powershell.exe / pwsh
+  color: "#bc8cff"
+  description: "PowerShell supports cmdlet name wildcards via Get-Command. The & (gcm Pattern) idiom is idiomatic globfuscation."
+  notes: |
+    PowerShell cmdlet name resolution supports wildcards via `Get-Command` (alias: `gcm`). Pattern: `& (gcm I*ke-W*R*) -Uri ...`. The `&` call operator invokes the resolved cmdlet. Also supports alias wildcards via `Get-Alias` (alias: `gal`): `& (gal ?e?)` resolves to `iex`.

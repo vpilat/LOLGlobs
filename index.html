@@ -1,0 +1,127 @@
+---
+layout: default
+title: LOLGlobs — Glob Pattern Evasion Catalog
+description: "A catalog of wildcard-based command obfuscation techniques for Linux, macOS, Windows CMD, and PowerShell."
+use_search: true
+---
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="64" height="64" rx="12" fill="#161b22"/>
+        <text x="6" y="48" font-family="'JetBrains Mono', monospace" font-size="42" font-weight="700" fill="#3fb950">*</text>
+        <text x="32" y="48" font-family="'JetBrains Mono', monospace" font-size="42" font-weight="700" fill="#58a6ff">?</text>
+      </svg>
+    </div>
+    <h1 class="hero-title">LOLGlobs</h1>
+    <p class="hero-tagline">Process execution through wildcard pattern evasion</p>
+    <p class="hero-sub">A catalog of glob-based command obfuscation for Linux &middot; macOS &middot; Windows CMD &middot; PowerShell</p>
+  </div>
+</div>
+
+<div class="catalog-section">
+  <div class="search-wrap">
+    <div class="search-bar-row">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/>
+      </svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Search commands, or type @linux, /download, T1059..." autocomplete="off" spellcheck="false">
+      <kbd class="search-shortcut">/</kbd>
+    </div>
+    <p class="search-hints">
+      <span class="hint"><code>@linux</code> <code>@macos</code> <code>@powershell</code> <code>@windows-cmd</code> &mdash; filter by platform</span>
+      <span class="hint-sep">&middot;</span>
+      <span class="hint"><code>/discovery</code> <code>/download</code> <code>/execution</code> &mdash; filter by category</span>
+      <span class="hint-sep">&middot;</span>
+      <span class="hint"><code>T1059</code> &mdash; search by MITRE ID</span>
+    </p>
+  </div>
+
+  <div class="filter-row">
+    <div class="platform-tabs" role="tablist" aria-label="Platform filter">
+      <button class="tab-btn active" data-platform="all" role="tab" aria-selected="true">All</button>
+      <button class="tab-btn platform-linux" data-platform="linux" role="tab" aria-selected="false">Linux</button>
+      <button class="tab-btn platform-macos" data-platform="macos" role="tab" aria-selected="false">macOS</button>
+      <button class="tab-btn platform-windows-cmd" data-platform="windows-cmd" role="tab" aria-selected="false">Windows CMD</button>
+      <button class="tab-btn platform-powershell" data-platform="powershell" role="tab" aria-selected="false">PowerShell</button>
+    </div>
+  </div>
+
+  <div class="category-chips" id="category-chips">
+    <button class="chip active" data-category="all">All Categories</button>
+    {% for cat in site.data.categories %}
+    <button class="chip" data-category="{{ cat.id }}">{{ cat.label }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="results-meta">
+    <span id="results-count" class="results-count"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table class="catalog-table" id="catalog-table">
+      <thead>
+        <tr>
+          <th class="col-name">Command</th>
+          <th class="col-platform">Platform</th>
+          <th class="col-patterns">Patterns</th>
+          <th class="col-category">Category</th>
+          <th class="col-mitre">MITRE</th>
+        </tr>
+      </thead>
+      <tbody id="catalog-tbody">
+        {% assign sorted_globs = site.globs | sort: 'Name' %}
+        {% for entry in sorted_globs %}
+        <tr class="entry-row"
+            data-name="{{ entry.Name | downcase }}"
+            data-platform="{{ entry.Platform }}"
+            data-category="{{ entry.Category }}"
+            data-mitre="{{ entry.MitreID }}"
+            data-desc="{{ entry.Description | downcase | strip_html }}"
+            onclick="window.location='{{ entry.url | relative_url }}'">
+          <td class="col-name">
+            <a href="{{ entry.url | relative_url }}" class="entry-link" onclick="event.stopPropagation()">{{ entry.Name }}</a>
+          </td>
+          <td class="col-platform">
+            <span class="badge platform-badge platform-{{ entry.Platform }}">
+              {% case entry.Platform %}
+                {% when 'linux' %}Linux
+                {% when 'macos' %}macOS
+                {% when 'windows-cmd' %}Windows CMD
+                {% when 'powershell' %}PowerShell
+              {% endcase %}
+            </span>
+          </td>
+          <td class="col-patterns">
+            <span class="pattern-count">{{ entry.Patterns | size }}</span>
+          </td>
+          <td class="col-category">
+            <span class="badge category-badge">{{ entry.Category }}</span>
+          </td>
+          <td class="col-mitre">
+            {% if entry.MitreID %}
+            <a href="https://attack.mitre.org/techniques/{{ entry.MitreID | replace: '.', '/' }}/" target="_blank" class="mitre-link" onclick="event.stopPropagation()">{{ entry.MitreID }}</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="no-results" class="no-results" style="display:none">
+    <p>No entries match your search. <a href="#" id="clear-search">Clear filters</a></p>
+  </div>
+</div>
+
+<script>
+window.LOLGLOB_ENTRIES = Array.from(document.querySelectorAll('#catalog-tbody .entry-row')).map(row => ({
+  el: row,
+  name: row.dataset.name,
+  platform: row.dataset.platform,
+  category: row.dataset.category,
+  mitre: row.dataset.mitre || '',
+  desc: row.dataset.desc
+}));
+</script>

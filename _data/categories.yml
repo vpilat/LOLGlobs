@@ -1,0 +1,54 @@
+- id: discovery
+  label: Discovery
+  description: Enumerate users, files, network, and system information
+  mitre: TA0007
+
+- id: download
+  label: Download
+  description: Transfer files or payloads from remote sources
+  mitre: TA0011
+
+- id: execution
+  label: Execution
+  description: Execute arbitrary commands or code
+  mitre: TA0002
+
+- id: upload
+  label: Upload
+  description: Send files or data to remote destinations
+  mitre: TA0010
+
+- id: persistence
+  label: Persistence
+  description: Maintain access after reboot or session end
+  mitre: TA0003
+
+- id: lateral-movement
+  label: Lateral Movement
+  description: Move through network or between systems
+  mitre: TA0008
+
+- id: exfiltration
+  label: Exfiltration
+  description: Extract data from compromised systems
+  mitre: TA0010
+
+- id: credential-access
+  label: Credential Access
+  description: Obtain credentials for authentication
+  mitre: TA0006
+
+- id: encode-decode
+  label: Encode/Decode
+  description: Encode or decode data for obfuscation or processing
+  mitre: TA0005
+
+- id: compile
+  label: Compile
+  description: Compile source code into executable payloads
+  mitre: TA0002
+
+- id: reconnaissance
+  label: Reconnaissance
+  description: Gather information about targets and networks
+  mitre: TA0043

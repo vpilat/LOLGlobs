@@ -1,0 +1,115 @@
+name: New LOLGlobs Entry
+description: Submit a new glob pattern evasion entry
+title: "[Entry] <CommandName> (<Platform>)"
+labels: ["new-entry"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing to LOLGlobs! Please fill out all fields below.
+
+  - type: input
+    id: name
+    attributes:
+      label: Command Name
+      description: The name of the command/binary
+      placeholder: "e.g., whoami"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - linux
+        - macos
+        - windows-cmd
+        - powershell
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - discovery
+        - download
+        - execution
+        - upload
+        - persistence
+        - lateral-movement
+        - exfiltration
+        - credential-access
+        - encode-decode
+        - compile
+        - reconnaissance
+    validations:
+      required: true
+
+  - type: input
+    id: mitre
+    attributes:
+      label: MITRE ATT&CK Technique ID
+      placeholder: "e.g., T1059.004"
+
+  - type: textarea
+    id: binary_paths
+    attributes:
+      label: Binary Path(s)
+      description: Full path(s) to the binary (one per line)
+      placeholder: |
+        /usr/bin/command
+        /bin/command
+    validations:
+      required: true
+
+  - type: textarea
+    id: patterns
+    attributes:
+      label: Glob Patterns
+      description: |
+        List each pattern in this format (one per block):
+        Pattern: w?oami
+        Wildcards: ?
+        Notes: Replaces 'h' with single-char wildcard
+      placeholder: |
+        Pattern: w?oami
+        Wildcards: ?
+        Notes: Replaces 'h' with single-char wildcard
+
+        Pattern: w*i
+        Wildcards: *
+        Notes: Star matches 'hoam'
+    validations:
+      required: true
+
+  - type: textarea
+    id: platform_notes
+    attributes:
+      label: Platform Notes
+      description: Any platform-specific behavior or caveats
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources
+      description: Relevant URLs (one per line)
+      placeholder: |
+        https://attack.mitre.org/techniques/T1059/
+        https://man7.org/linux/man-pages/man1/command.1.html
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Submission Checklist
+      options:
+        - label: I have tested these patterns on the target platform
+          required: true
+        - label: This is for a legitimate system binary (not malware)
+          required: true
+        - label: I have included at least 3 patterns
+          required: true
+        - label: This entry does not already exist in the catalog
+          required: true
