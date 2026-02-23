@@ -5,7 +5,7 @@ Platform: powershell
 BinaryPath:
   - "PowerShell cmdlet"
 Category: discovery
-MitreID: T1083
+MitreID: T1005
 Patterns:
   - Pattern: "& (gcm G*-C*t) C:\\Windows\\System32\\drivers\\etc\\hosts"
     Wildcards: ["*"]
@@ -26,6 +26,6 @@ Patterns:
     Wildcards: ["*"]
     Notes: "Prefix wildcard"
 Resources:
-  - https://attack.mitre.org/techniques/T1083/
+  - https://attack.mitre.org/techniques/T1005/
   - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-content
 ---

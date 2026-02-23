@@ -1,11 +1,11 @@
 ---
 Name: Set-Content
-Description: "Write content to a file. Used to write payloads, modify system files, or create persistence artifacts."
+Description: "Write content to a file. Used to drop payloads, modify system files, or write scripts to disk for execution."
 Platform: powershell
 BinaryPath:
   - "PowerShell cmdlet"
-Category: persistence
-MitreID: T1105
+Category: execution
+MitreID: T1059.001
 Patterns:
   - Pattern: "& (gcm S*-C*t) -Path C:\\payload.ps1 -Value $code"
     Wildcards: ["*"]
@@ -23,6 +23,6 @@ Patterns:
     Wildcards: []
     Notes: "Alias 'sc' (note: conflicts with sc.exe service control)"
 Resources:
-  - https://attack.mitre.org/techniques/T1105/
+  - https://attack.mitre.org/techniques/T1059/001/
   - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-content
 ---

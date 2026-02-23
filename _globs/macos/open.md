@@ -5,7 +5,7 @@ Platform: macos
 BinaryPath:
   - /usr/bin/open
 Category: execution
-MitreID: T1059.002
+MitreID: T1218
 Patterns:
   - Pattern: "ope?"
     Wildcards: ["?"]
@@ -31,6 +31,6 @@ Patterns:
 PlatformNotes: |
   macOS-exclusive command. `open -a Calculator` opens an app by name. `open -n -a /Applications/Utilities/Terminal.app` opens a new Terminal. Can also open URLs: `open https://...` which triggers the default browser.
 Resources:
-  - https://attack.mitre.org/techniques/T1059/002/
+  - https://attack.mitre.org/techniques/T1218/
   - https://ss64.com/osx/open.html
 ---

