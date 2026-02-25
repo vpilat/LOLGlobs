@@ -13,9 +13,9 @@ Patterns:
   - Pattern: "& (gal i?x) 'whoami'"
     Wildcards: ["?"]
     Notes: "Get-Alias (gal) with wildcard — 'iex' is the alias for Invoke-Expression"
-  - Pattern: "& (gal ?e?) 'whoami'"
+  - Pattern: "& (gal ?ex) 'whoami'"
     Wildcards: ["?"]
-    Notes: "Wildcards around 'e' in 'iex' alias"
+    Notes: "Wildcard prefix on 'iex' alias — uniquely matches iex"
   - Pattern: "iex 'whoami'"
     Wildcards: []
     Notes: "Direct alias use — not a glob but the canonical short form"
@@ -28,6 +28,9 @@ Patterns:
   - Pattern: "& (Get-Alias i?x) 'payload'"
     Wildcards: ["?"]
     Notes: "Full Get-Alias with wildcard"
+  - Pattern: "& (gcm Invok[d-f]-Expression) 'payload'"
+    Wildcards: ["[d-f]"]
+    Notes: "Character range matches 'e' in Invoke"
 PlatformNotes: |
   `iex` is a built-in alias. `Invoke-Expression` is one of the most monitored cmdlets. Wildcards on the cmdlet name via `gcm` or `gal` can bypass signature-based detections. Also works with base64: `iex ([System.Text.Encoding]::Unicode.GetString([System.Convert]::FromBase64String('...')))`.
 Resources:

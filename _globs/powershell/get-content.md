@@ -16,12 +16,18 @@ Patterns:
   - Pattern: "& (gcm G?t-Content) ..."
     Wildcards: ["?"]
     Notes: "Single char wildcard replaces 'e'"
+  - Pattern: "& (gcm G[d-f]t-Content) ..."
+    Wildcards: ["[d-f]"]
+    Notes: "Character range matches 'e' in Get"
   - Pattern: "gc C:\\sensitive\\file.txt"
     Wildcards: []
     Notes: "Built-in alias 'gc' for Get-Content"
   - Pattern: "cat C:\\sensitive\\file.txt"
     Wildcards: []
     Notes: "Alias 'cat' also works in PowerShell"
+  - Pattern: "type C:\\sensitive\\file.txt"
+    Wildcards: []
+    Notes: "Alias 'type' also resolves to Get-Content"
   - Pattern: "& (gcm *Content) ..."
     Wildcards: ["*"]
     Notes: "Prefix wildcard"

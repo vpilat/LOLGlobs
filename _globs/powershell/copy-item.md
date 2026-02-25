@@ -16,12 +16,21 @@ Patterns:
   - Pattern: "& (gcm C?py-Item) -Path ..."
     Wildcards: ["?"]
     Notes: "Single char wildcard replaces 'o'"
+  - Pattern: "& (gcm C[n-p]py-Item) -Path ..."
+    Wildcards: ["[n-p]"]
+    Notes: "Character range matches 'o' in Copy"
   - Pattern: "copy -Path src -Destination dst"
     Wildcards: []
     Notes: "Alias 'copy' for Copy-Item"
   - Pattern: "cp -Path src -Destination dst"
     Wildcards: []
     Notes: "Alias 'cp' for Copy-Item"
+  - Pattern: "cpi -Path src -Destination dst"
+    Wildcards: []
+    Notes: "Alias 'cpi' for Copy-Item"
+  - Pattern: "& (gal cp?) -Path src -Destination dst"
+    Wildcards: ["?"]
+    Notes: "Get-Alias with wildcard resolves 'cpi' — cp? avoids matching 'cli' (Clear-Item)"
   - Pattern: "& (gcm *-Item) -Path ..."
     Wildcards: ["*"]
     Notes: "Prefix wildcard — note: matches Get-Item, Set-Item etc."
